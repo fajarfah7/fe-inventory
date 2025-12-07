@@ -1,3 +1,5 @@
+# portfolio project with react typescript to handle inventory
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -172,3 +174,4 @@ src/
 │
 ├── index.css
 └── main.tsx
+
