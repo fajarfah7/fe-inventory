@@ -1,11 +1,11 @@
 import { CardWrapper } from "@/components/molecules/CardWrapper";
-import { CustomerFormEdit } from "../components/CustomerFormEdit";
+import { CustomerEditForm } from "../components/CustomerEditForm";
 
 export function CustomerEdt() {
   return (
     <>
       <CardWrapper title="Edit Customer">
-        <CustomerFormEdit />
+        <CustomerEditForm />
       </CardWrapper>
     </>
   );

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { FieldGroup, FieldSet } from "@/components/ui/field";
 
-export function CustomerFormCreate() {
+export function CustomerCreateForm() {
   const form = useForm<CustomerCreateZod>({
     resolver: zodResolver(CustomerCreateSchema),
     disabled: false,
@@ -19,10 +19,14 @@ export function CustomerFormCreate() {
     }
   });
 
+  const onSubmit = async (values: CustomerCreateZod) => {
+    console.log({values})
+  }
+
   return (
     <>
       <Form {...form}>
-        <form>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <FieldSet>
               <FieldGroup>

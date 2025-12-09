@@ -37,6 +37,11 @@ const items = [
     icon: Settings,
   },
   {
+    title: "Purchase Order",
+    url: "/purchase-order/create",
+    icon: Settings,
+  },
+  {
     title: "Settings",
     url: "#",
     icon: Settings,

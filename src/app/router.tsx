@@ -10,6 +10,7 @@ import LoginPage from "@/pages/LoginPage";
 import { CustomerList } from "@/features/customer/pages/CustomerList";
 import { CustomerCreate } from "@/features/customer/pages/CustomerCreate";
 import { CustomerEdt } from "@/features/customer/pages/CustomerEdit";
+import { PurchaseOrderCreate } from "@/features/purchase_order/pages/PurchaseOrderCreate";
 
 export const router = createBrowserRouter([
   {
@@ -69,7 +70,14 @@ export const router = createBrowserRouter([
           <RouteProtector>
             <CustomerEdt />
           </RouteProtector>
-      }
+      },
+      {
+        path: "/purchase-order/create",
+        element:
+          <RouteProtector>
+            <PurchaseOrderCreate />
+          </RouteProtector>
+      },
     ],
   },
   {

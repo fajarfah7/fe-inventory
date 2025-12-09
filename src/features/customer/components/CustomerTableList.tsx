@@ -75,7 +75,7 @@ const mockCustomers: CustomerResponse[] = [
   },
 ];
 
-export function CustomerListTable() {
+export function CustomerTableList() {
   const columns: ColumnDef<CustomerResponse>[] = [
     {
       accessorKey: "name",

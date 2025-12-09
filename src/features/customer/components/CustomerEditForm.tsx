@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomerEditSchema, type CustomerEditZod } from "../schemas/customer.edit.schema";
 
-export function CustomerFormEdit() {
+export function CustomerEditForm() {
   const form = useForm<CustomerEditZod>({
     resolver: zodResolver(CustomerEditSchema),
     disabled: false,

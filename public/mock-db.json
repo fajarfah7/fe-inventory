@@ -1,0 +1,29 @@
+{
+    "items": [
+        {
+            "id": 101,
+            "name": "Laptop",
+            "sku": "LPT-DL-XPS-13"
+        },
+        {
+            "id": 102,
+            "name": "Wireless Mouse",
+            "sku": "ACC-MS-LOGI-MX"
+        },
+        {
+            "id": 103,
+            "name": "Mechanical Keyboard",
+            "sku": "ACC-KB-RAZ-BH"
+        },
+        {
+            "id": 104,
+            "name": "USB-C Hub",
+            "sku": "ACC-HB-ANKR-C4"
+        },
+        {
+            "id": 105,
+            "name": "External SSD 1TB",
+            "sku": "STO-SSD-SAMS-T7"
+        }
+    ]
+}

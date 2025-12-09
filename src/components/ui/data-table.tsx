@@ -3,6 +3,7 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  type Table as TanstackTable
 } from "@tanstack/react-table"
 
 import {
@@ -13,23 +14,58 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import type { TableHTMLAttributes } from "react"
+import { useEffect, type TableHTMLAttributes } from "react"
+import { DataTablePagination } from "./pagination-data-table"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  props?: TableHTMLAttributes<HTMLTableElement>
+  pageSize?: number,
+  pageCount?: number
+  props?: TableHTMLAttributes<HTMLTableElement>,
+  onTableReady?: (table: TanstackTable<any>) => void;
+  handlePerPageChange?: (size: number) => void;
+  handlePageChange?: (page: number) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
-  data
+  data,
+  pageCount,
+  pageSize,
+  onTableReady,
+  handlePerPageChange,
+  handlePageChange,
 }: DataTableProps<TData, TValue>) {
+
   const table = useReactTable({
     data,
     columns,
+    initialState: {
+      pagination: {
+        pageSize: pageSize,
+      }
+    },
     getCoreRowModel: getCoreRowModel(),
-  })
+    getRowId: row => String((row as any).id), // or your own logic
+    pageCount: pageCount,
+    manualPagination: true,
+  });
+
+  const dataTablePaginationChangePage = (page: number) => {
+    handlePageChange ? handlePageChange(page) : null;
+  }
+
+  // runs only once
+  useEffect(() => {
+    onTableReady?.(table);
+  }, []);
+
+  // runs ONLY when pagination.pageSize changes
+  useEffect(() => {
+    const pageSize = table.getState().pagination.pageSize;
+    handlePerPageChange?.(pageSize);
+  }, [table.getState().pagination.pageSize]);
 
   return (
     <div className="overflow-hidden rounded-md border max-w-84 md:max-w-160">
@@ -43,9 +79,9 @@ export function DataTable<TData, TValue>({
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </TableHead>
                 )
               })}
@@ -75,6 +111,8 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
+      
+      <DataTablePagination table={table} handlePageChange={dataTablePaginationChangePage} />
     </div>
   )
 }
