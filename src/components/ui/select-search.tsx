@@ -28,7 +28,7 @@ export function SelectSearch({ options, value, placeholder, onChange }: SelectSe
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between text-neutral-500"
+          className="w-[200px] justify-between"
           onClick={() => setSearch("")}
         >
           {value

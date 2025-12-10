@@ -111,8 +111,8 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      
-      <DataTablePagination table={table} handlePageChange={dataTablePaginationChangePage} />
+
+      {pageCount ? <DataTablePagination table={table} handlePageChange={dataTablePaginationChangePage} />: ""}
     </div>
   )
 }

@@ -19,12 +19,13 @@ import { z } from "zod";
 // unit_price NUMERIC NULL
 // subtotal NUMERIC NULL
 
-const PurchaseOrderCreateItemSchema = z.object({
-    item_id: z.string().min(1, "Item ID is required"),
+const PurchaseOrderCreateProductSchema = z.object({
+    product_id: z.string().min(1, "Product ID is required"),
     qty_ordered: z.number().min(1, "Quantity is required"),
     name: z.string().optional(),
     sku: z.string().optional(),
     description: z.string().optional(),
+    special_instruction: z.string().optional(),
 });
 
 export const PurchaseOrderCreateSchema = z.object({
@@ -34,7 +35,7 @@ export const PurchaseOrderCreateSchema = z.object({
         .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)"),
     note: z.string().optional(),
 
-    items: z.array(PurchaseOrderCreateItemSchema).min(1, "Purchase order at least need one item"),
+    products: z.array(PurchaseOrderCreateProductSchema).min(1, "Purchase order at least need one product"),
 });
 
 export type PurchaseOrderCreateZod = z.infer<typeof PurchaseOrderCreateSchema>

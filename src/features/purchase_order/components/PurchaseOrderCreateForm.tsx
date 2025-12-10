@@ -6,7 +6,8 @@ import { FieldGroup, FieldSet } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { SelectSearch } from "@/components/ui/select-search";
 import type { SelectOption } from "../types/select";
-import { PurchaseOrderTableItems } from "./supplier/table";
+import { PurchaseOrderTableItems } from "./table";
+import { DateYYYYMMDD } from "../../../components/ui/date";
 
 const suppliers: SelectOption[] = [
   {
@@ -43,16 +44,16 @@ export function PurchaseOrderCreateForm() {
     defaultValues: {
       supplier_id: "",
       expected_date: "",
-      items: [],
+      products: [],
     }
   });
 
   const { errors } = form.formState
-  console.log(form.watch());
-  console.log(errors);
+  console.log("FORM_WATCH:", form.watch());
+  console.log("ERROR:", errors);
 
   const onSubmit = (values: PurchaseOrderCreateZod) => {
-    console.log(values);
+    console.log("FORM_VALUES:", values);
   }
 
   return (
@@ -81,9 +82,25 @@ export function PurchaseOrderCreateForm() {
                   )}
                 />
 
+                <FormField
+                  control={form.control}
+                  name="expected_date"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Expected Date</FormLabel>
+                      <FormControl>
+                        <DateYYYYMMDD onSelect={field.onChange} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <div className={form.watch("supplier_id") !== "" ? "block":"hidden"}>
                 <FormProvider {...form}>
-                  <PurchaseOrderTableItems form={form}  />
+                  <PurchaseOrderTableItems form={form} />
                 </FormProvider>
+                </div>
+
               </FieldGroup>
             </FieldSet>
           </FieldGroup>
