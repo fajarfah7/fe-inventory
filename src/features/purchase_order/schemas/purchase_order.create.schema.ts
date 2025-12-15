@@ -1,24 +1,5 @@
 import { z } from "zod";
 
-// id UUID PK
-// supplier_id UUID FK -> suppliers(id)
-// po_number VARCHAR(50) UNIQUE
-// invoice_number VARCHAR(100) NULL     -- supplier note/faktur
-// status ENUM('draft','ordered','partially_received','received','cancelled')
-// order_date DATE
-// expected_date DATE NULL
-// note TEXT NULL
-// created_at timestamptz
-// updated_at timestamptz
-
-// id UUID PK
-// purchase_order_id UUID FK -> purchase_orders(id)
-// item_id UUID FK -> items(id)
-// qty_ordered NUMERIC
-// qty_received NUMERIC DEFAULT 0
-// unit_price NUMERIC NULL
-// subtotal NUMERIC NULL
-
 const PurchaseOrderCreateProductSchema = z.object({
     product_id: z.string().min(1, "Product ID is required"),
     qty_ordered: z.number().min(1, "Quantity is required"),

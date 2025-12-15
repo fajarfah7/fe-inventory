@@ -42,6 +42,16 @@ const items = [
     icon: Settings,
   },
   {
+    title: "Sales Order",
+    url: "/sales-order",
+    icon: Settings,
+  },
+  {
+    title: "Delivery Order",
+    url: "/delivery-order",
+    icon: Settings,
+  },
+  {
     title: "Settings",
     url: "#",
     icon: Settings,
@@ -49,10 +59,10 @@ const items = [
 ]
 
 
-export function AppSidebarContent() {
+export function AppSidebarContent({ className }: { className?: string}) {
   return (
     <>
-      <SidebarContent>
+      <SidebarContent className={className}>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>

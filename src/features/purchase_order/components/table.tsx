@@ -33,7 +33,7 @@ export function PurchaseOrderTableItems({ form }: PurchaseOrderTableItemsProps<P
 
   const [totalPage, setTotalPage] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
-  const [perPage, setPerPage] = useState<number>(1);
+  const [perPage, setPerPage] = useState<number>(5);
   const [productResponses, setProductResponses] = useState<ProductResponse[]>([]);
 
   useEffect(() => {
@@ -114,68 +114,70 @@ export function PurchaseOrderTableItems({ form }: PurchaseOrderTableItemsProps<P
         handlePageChange={handlePageChange}
       />
 
-      {selectedItemFieldArray.fields.map((product, idx) => (
-        <Card key={idx}>
-          <CardHeader>
-            <CardTitle>{product.name}</CardTitle>
-            <CardDescription>{product.sku}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-2">
-              <div className="flex flex-row gap-2">
-                <FormLabel>Quantity</FormLabel>
-                <FormField
-                  control={form.control}
-                  name={`products.${idx}.qty_ordered`}
-                  render={({ field }) => (
-                    <FormItem className="m-0">
-                      <FormControl>
-                        <Input
-                          className="max-w-24"
-                          type="number"
-                          {...field}
-                          onChange={(e) => {
-                            const v = e.target.value;
-                            field.onChange(v === "" ? "" : Number(v));
-                          }}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="flex flex-col gap-1">
-                <FormField
-                  control={form.control}
-                  name={`products.${idx}.special_instruction`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormItem>
+      <div className="flex flex-col gap-2 mt-2">
+        {selectedItemFieldArray.fields.map((product, idx) => (
+          <Card key={idx}>
+            <CardHeader>
+              <CardTitle>{product.name}</CardTitle>
+              <CardDescription>{product.sku}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-row gap-2">
+                  <FormLabel>Quantity</FormLabel>
+                  <FormField
+                    control={form.control}
+                    name={`products.${idx}.qty_ordered`}
+                    render={({ field }) => (
+                      <FormItem className="m-0">
                         <FormControl>
-                          <Textarea placeholder="Special Instruction" {...field} className="max-h-2" />
+                          <Input
+                            className="max-w-24"
+                            type="number"
+                            {...field}
+                            onChange={(e) => {
+                              const v = e.target.value;
+                              field.onChange(v === "" ? "" : Number(v));
+                            }}
+                          />
                         </FormControl>
                       </FormItem>
-                    </FormItem>
-                  )}
-                />
+                    )}
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <FormField
+                    control={form.control}
+                    name={`products.${idx}.special_instruction`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormItem>
+                          <FormControl>
+                            <Textarea placeholder="Special Instruction" {...field} className="max-h-2" />
+                          </FormControl>
+                        </FormItem>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex flex-row items-end justify-end">
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => {
+                      selectedItemFieldArray.remove(idx);
+                      const row = table?.getRow(product.product_id);
+                      row?.toggleSelected(false);
+                    }}
+                  >
+                    Remove
+                  </Button>
+                </div>
               </div>
-              <div className="flex flex-row items-end justify-end">
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={() => {
-                    selectedItemFieldArray.remove(idx);
-                    const row = table?.getRow(product.product_id);
-                    row?.toggleSelected(false);
-                  }}
-                >
-                  Remove
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </>
   );
 }

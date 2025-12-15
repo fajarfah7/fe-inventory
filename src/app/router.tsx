@@ -3,7 +3,7 @@ import { WarehouseList } from "@/features/warehouse/pages/WarehouseList";
 import { MainLayout } from "@/layouts/MainLayout";
 import { ErrorNotFound } from "@/pages/error/NotFound";
 import { Dashboard } from "@/pages/Dashboard";
-import { ItemList } from "@/features/item/pages/ItemList";
+import { ItemList } from "@/features/item/pages/ProductList";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { RouteProtector } from "./route-protector";
 import LoginPage from "@/pages/LoginPage";
@@ -11,6 +11,9 @@ import { CustomerList } from "@/features/customer/pages/CustomerList";
 import { CustomerCreate } from "@/features/customer/pages/CustomerCreate";
 import { CustomerEdt } from "@/features/customer/pages/CustomerEdit";
 import { PurchaseOrderCreate } from "@/features/purchase_order/pages/PurchaseOrderCreate";
+import { SalesOrderList } from "@/features/sales_order/pages/SalesOrderList";
+import { DeliveryOrderIndex } from "@/features/delivery_order/pages/DeliveryOrderIndex";
+import { DeliveryOrderCreate } from "@/features/delivery_order/pages/DeliveryOrderCreate";
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +79,27 @@ export const router = createBrowserRouter([
         element:
           <RouteProtector>
             <PurchaseOrderCreate />
+          </RouteProtector>
+      },
+      {
+        path: "/sales-order",
+        element:
+          <RouteProtector>
+            <SalesOrderList />
+          </RouteProtector>
+      },
+      {
+        path: "/delivery-order",
+        element:
+          <RouteProtector>
+            <DeliveryOrderIndex />
+          </RouteProtector>
+      },
+      {
+        path: "/delivery-order/create",
+        element:
+          <RouteProtector>
+            <DeliveryOrderCreate />
           </RouteProtector>
       },
     ],

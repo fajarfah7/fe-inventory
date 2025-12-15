@@ -20,6 +20,7 @@ import { DataTablePagination } from "./pagination-data-table"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  loading?: boolean,
   pageSize?: number,
   pageCount?: number
   props?: TableHTMLAttributes<HTMLTableElement>,
@@ -31,6 +32,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
+  loading,
   pageCount,
   pageSize,
   onTableReady,
@@ -68,7 +70,7 @@ export function DataTable<TData, TValue>({
   }, [table.getState().pagination.pageSize]);
 
   return (
-    <div className="overflow-hidden rounded-md border max-w-84 md:max-w-160">
+    <div className="overflow-hidden rounded-md border md:max-w-160">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -89,7 +91,13 @@ export function DataTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {loading ? (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                Loading...
+              </TableCell>
+            </TableRow>
+          ) : table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
@@ -112,7 +120,7 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
 
-      {pageCount ? <DataTablePagination table={table} handlePageChange={dataTablePaginationChangePage} />: ""}
+      {pageCount ? <DataTablePagination table={table} handlePageChange={dataTablePaginationChangePage} /> : ""}
     </div>
   )
 }

@@ -3,11 +3,11 @@ import { AppSidebarHeader } from "@/layouts/sidebar/AppSidebarHeader"
 import { AppSidebarFooter } from "@/layouts/sidebar/AppSidebarFooter"
 import { AppSidebarContent } from "@/layouts/sidebar/AppSidebarContent"
 
-export function AppSidebar() {
+export function AppSidebar({ className }: { className?: string }) {
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon" className={className}>
       <AppSidebarHeader />
-      <AppSidebarContent />
+      <AppSidebarContent className="md:h-full max-h-screen" />
       <AppSidebarFooter />
     </Sidebar>
   )

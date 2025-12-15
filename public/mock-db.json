@@ -25,5 +25,103 @@
             "name": "External SSD 1TB",
             "sku": "STO-SSD-SAMS-T7"
         }
+    ],
+    "sales-orders": [
+        {
+            "id": "1",
+            "so_number": "SO-XYZA001",
+            "po_number": "PO-XYZA001",
+            "buyer_company_name": "PT Angkasa Sejahtera",
+            "date": "2025-04-16 00:00:00",
+            "expected_date": "2025-04-27 00:00:00",
+            "status": "ORDERED"
+        },
+        {
+            "id": "2",
+            "so_number": "SO-XYZB002",
+            "po_number": "PO-XYZB002",
+            "buyer_company_name": "PT Bumi Tirta",
+            "date": "2025-04-16 00:00:00",
+            "expected_date": "2025-04-27 00:00:00",
+            "status": "PROCESSING"
+        },
+        {
+            "id": "3",
+            "so_number": "SO-XYZC003",
+            "po_number": "PO-XYZC003",
+            "buyer_company_name": "PT Indo Stell Nusantara",
+            "date": "2025-04-16 00:00:00",
+            "expected_date": "2025-04-27 00:00:00",
+            "status": "SHIPPING"
+        },
+        {
+            "id": "4",
+            "so_number": "SO-XYZD004",
+            "po_number": "PO-XYZD004",
+            "buyer_company_name": "PT Emas Indah",
+            "date": "2025-04-16 00:00:00",
+            "expected_date": "2025-04-27 00:00:00",
+            "status": "FINISHED"
+        },
+        {
+            "id": "5",
+            "so_number": "SO-XYZE005",
+            "po_number": "PO-XYZE005",
+            "buyer_company_name": "PT Angkasa Sejahtera",
+            "date": "2025-04-16 00:00:00",
+            "expected_date": "2025-04-27 00:00:00",
+            "status": "FINISHED"
+        }
+    ],
+    "delivery-orders": [
+        {
+            "id": "1",
+            "do_number": "DO-QWA0001",
+            "buyer_company_name": "PT Angkasa Sejahtera",
+            "expected_date": "2025-04-27 00:00:00",
+            "status": "PROCESSING"
+        },
+        {
+            "id": "2",
+            "do_number": "DO-QWA0002",
+            "buyer_company_name": "PT Angkasa Prima",
+            "expected_date": "2025-04-27 00:00:00",
+            "status": "PROCESSING"
+        }
+    ],
+    "delivery-order-details": [
+        {
+            "id": "1",
+            "do_number": "DO-QWA0001",
+            "buyer_company_name": "PT Angkasa Sejahtera",
+            "expected_date": "2025-04-27 00:00:00",
+            "status": "PROCESSING",
+            "products": [
+                {
+                    "sales_order_product_id": "1",
+                    "product_id": "1",
+                    "product_name": "Laptop",
+                    "product_sku": "LPT-DL-XPS-13",
+                    "qty_ordered": 4,
+                    "special_instruction": "Please make sure installed RAM 32GB"
+                },
+                {
+                    "sales_order_product_id": "2",
+                    "product_id": "2",
+                    "product_name": "Wireless Mouse",
+                    "product_sku": "ACC-MS-LOGI-MX",
+                    "qty_ordered": 5,
+                    "special_instruction": "Test these are before shipped"
+                },
+                {
+                    "sales_order_product_id": "3",
+                    "product_id": "3",
+                    "product_name": "Mechanical Keyboard",
+                    "product_sku": "ACC-KB-RAZ-BH",
+                    "qty_ordered": 3,
+                    "special_instruction": "Check using application to make sure every keys works. Lorem ipsum dolor sit amet del"
+                }
+            ]
+        }
     ]
 }
