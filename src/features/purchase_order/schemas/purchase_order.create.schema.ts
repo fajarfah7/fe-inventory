@@ -14,6 +14,7 @@ export const PurchaseOrderCreateSchema = z.object({
     expected_date: z
         .string()
         .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)"),
+    address: z.string().min(1, "Address is required"),
     note: z.string().optional(),
 
     products: z.array(PurchaseOrderCreateProductSchema).min(1, "Purchase order at least need one product"),

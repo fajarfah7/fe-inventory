@@ -1,4 +1,26 @@
 {
+    "companies": [
+        {
+            "id": "1",
+            "code": "ANSJ",
+            "name": "PT Angkasa Sejahtera"
+        },
+        {
+            "id": "2",
+            "code": "BTIR",
+            "name": "PT Bumi Tirta"
+        },
+        {
+            "id": "3",
+            "code": "ISNU",
+            "name": "PT Indo Stell Nusantara"
+        },
+        {
+            "id": "4",
+            "code": "EMIN",
+            "name": "PT Emas Indah"
+        }
+    ],
     "items": [
         {
             "id": 101,
@@ -24,6 +46,25 @@
             "id": 105,
             "name": "External SSD 1TB",
             "sku": "STO-SSD-SAMS-T7"
+        }
+    ],
+    "items1": [
+        {
+            "id": 101,
+            "name": "Laptop",
+            "sku": "LPT-DL-XPS-13"
+        }
+    ],
+    "items2": [
+        {
+            "id": 101,
+            "name": "Laptop",
+            "sku": "LPT-DL-XPS-13"
+        },
+        {
+            "id": 102,
+            "name": "Wireless Mouse",
+            "sku": "ACC-MS-LOGI-MX"
         }
     ],
     "sales-orders": [

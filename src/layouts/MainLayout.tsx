@@ -10,7 +10,7 @@ export function MainLayout() {
         <AppSidebar/>
         <main className="w-94 md:w-full flex flex-col">
           <SidebarTrigger />
-          <div className="w-full p-2 ">
+          <div className="w-screen md:w-full p-2 ">
             <Outlet />
           </div>
         </main>

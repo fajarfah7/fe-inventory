@@ -1,5 +1,5 @@
 import { CardWrapper } from "@/components/molecules/CardWrapper";
-import { DeliveryOrderIndexTable } from "../components/table-index";
+import { DeliveryOrderIndexTable } from "../components/table-index-delivery-order";
 
 export function DeliveryOrderIndex() {
 

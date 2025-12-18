@@ -6,76 +6,79 @@ import type { ColumnDef, Table } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { axiosClient } from "@/api/http";
-import type { PurchaseOrderTableItemsProps } from "../types/table";
 import type { PurchaseOrderCreateZod } from "../schemas/purchase_order.create.schema";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-
-type ProductResponse = {
-  id: number;
-  name: string;
-  sku: string;
-}
-
-const getItems = async (page: number, limit: number): Promise<any> => {
-  const res = await axiosClient.get(`/items?_page=${page}&_per_page=${limit}`);
-  return res.data;
-}
+import type { ProductResponse, PurchaseOrderTableItemsProps } from "../types/purchase-order.type";
+import type { PaginationQueryParamZodSchema } from "@/schemas/pagination-request.schema";
+import { usePurchaseOrderGetProductLists } from "../api/purchase-order.api";
 
 export function PurchaseOrderTableItems({ form }: PurchaseOrderTableItemsProps<PurchaseOrderCreateZod>) {
   const supplierId = form.watch("supplier_id");
+
+  const [table, setTable] = useState<Table<ProductResponse> | null>(null);
+
+  const [queryParam, setQueryParam] = useState<PaginationQueryParamZodSchema>({
+    page: 1,
+    perPage: 1,
+    search: "",
+    sort: "",
+  });
+
+  const { loading, data, errors, totalPage } = usePurchaseOrderGetProductLists(supplierId, queryParam);
+
   useEffect(() => {
     if (!supplierId) return;
     table?.reset();
     selectedItemFieldArray.replace([]);
-  }, [supplierId])
-
-  const [totalPage, setTotalPage] = useState<number>(0);
-  const [page, setPage] = useState<number>(1);
-  const [perPage, setPerPage] = useState<number>(5);
-  const [productResponses, setProductResponses] = useState<ProductResponse[]>([]);
-
-  useEffect(() => {
-    if (!supplierId) return;
-    getItems(page, perPage).then((res) => {
-      setTotalPage(Number(res.pages) as number);
-      setProductResponses(res.data as ProductResponse[]);
-    }).catch((err: Error) => {
-      throw err;
-    });
-  }, [page, perPage, supplierId]);
+  }, [supplierId]);
 
   const handlePageSize = (size: number) => {
-    if (size !== perPage) setPerPage(size);
-  };
-  const handlePageChange = (pageChange: number) => {
-    if (pageChange !== page) setPage(pageChange);
+    if (size !== queryParam.perPage) setQueryParam((prev) => ({ ...prev, perPage: size }));
   };
 
+  const handlePageChange = (pageChange: number) => {
+    if (pageChange !== queryParam.page) setQueryParam((prev) => ({ ...prev, page: pageChange }));
+  };
 
   const selectedItemFieldArray = useFieldArray({ control: form.control, name: "products" });
 
+  const [rowSelection, setRowSelection] =
+    useState<Record<string, boolean>>({});
+
   const columns: ColumnDef<ProductResponse>[] = [
     {
-      id: "select",
+      id: "id",
       header: "#",
       cell: ({ row }) => {
         return (
           <Checkbox
-            checked={row.getIsSelected()}
+            checked={rowSelection[row.original.id]}
             onCheckedChange={(value) => {
               if (value) {
+
                 selectedItemFieldArray.append({
                   product_id: String(row.original.id),
                   name: row.original.name,
                   sku: row.original.sku,
                   qty_ordered: 0,
                   description: ""
-                })
+                });
+
+                setRowSelection(prev => ({
+                  ...prev,
+                  [String(row.original.id)]: true,
+                }));
+
               } else {
                 const i = selectedItemFieldArray.fields.findIndex((x) => x.product_id === String(row.original.id));
+                
                 if (i !== -1) selectedItemFieldArray.remove(i);
+
+                setRowSelection(prev => ({
+                  ...prev,
+                  [String(row.original.id)]: false,
+                }));
               }
               row.toggleSelected(!!value);
             }}
@@ -96,22 +99,19 @@ export function PurchaseOrderTableItems({ form }: PurchaseOrderTableItemsProps<P
     }
   ]
 
-  const { errors } = form.formState
-  console.log(form.watch());
-  console.log(errors);
-
-  const [table, setTable] = useState<Table<ProductResponse> | null>(null);
+  if (errors) return (<ul>{errors.map((msg, idx) => <li key={idx}>{msg}</li>)}</ul>);
 
   return (
     <>
       <DataTable
         columns={columns}
-        data={productResponses}
-        pageCount={totalPage}
-        pageSize={perPage}
+        data={data}
+        pageCount={totalPage ? totalPage : 0}
+        pageSize={queryParam.perPage}
         onTableReady={setTable}
         handlePerPageChange={handlePageSize}
         handlePageChange={handlePageChange}
+        loading={loading}
       />
 
       <div className="flex flex-col gap-2 mt-2">
@@ -166,8 +166,13 @@ export function PurchaseOrderTableItems({ form }: PurchaseOrderTableItemsProps<P
                     size="sm"
                     onClick={() => {
                       selectedItemFieldArray.remove(idx);
-                      const row = table?.getRow(product.product_id);
-                      row?.toggleSelected(false);
+                      // const row = table?.getRow(product.product_id);
+                      // row?.toggleSelected(false);
+
+                      setRowSelection(prev => ({
+                        ...prev,
+                        [String(product.product_id)]: false,
+                      }));
                     }}
                   >
                     Remove

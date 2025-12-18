@@ -7,7 +7,7 @@ import { useFieldArray } from "react-hook-form";
 
 export function DeliveryOrderProducts({ form }: DeliveryOrderCardProps<DeliveryOrderCreateZod>) {
   const itemFieldArray = useFieldArray({ control: form.control, name: "products" });
-  console.log("field", itemFieldArray.fields)
+  
   return (
     <>
       {itemFieldArray.fields.map((product, idx) => (

@@ -175,3 +175,26 @@ src/
 ├── index.css
 └── main.tsx
 
+# mental model:
+## rendering and hook process
+```
+export function Test() {
+  // here are process rendering
+  // react will process custom hooks, useState, useMemo, useCallback
+  useEffect(() => {...}, [...]) <- this useEffect called afeter react finished rendering
+}
+```
+## hook
+whatever condition, the order of hooks must be the same
+ex:
+wrong:
+```
+if (!isExist) return; // <- blocked by this condition
+setState(...)
+useEffect(...);
+```
+```
+correct:
+useState(...);
+useEffect(...if(isExist) return; ...);
+```

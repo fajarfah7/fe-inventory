@@ -5,9 +5,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { FieldGroup, FieldSet } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { SelectSearch } from "@/components/ui/select-search";
-import type { SelectOption } from "../types/select";
-import { PurchaseOrderTableItems } from "./table";
+import { PurchaseOrderTableItems } from "./card-create-purchase-order";
 import { DateYYYYMMDD } from "../../../components/ui/date";
+import { Textarea } from "@/components/ui/textarea";
+import type { SelectOption } from "@/types/select-options.type";
 
 const suppliers: SelectOption[] = [
   {
@@ -48,10 +49,6 @@ export function PurchaseOrderCreateForm() {
     }
   });
 
-  const { errors } = form.formState
-  console.log("FORM_WATCH:", form.watch());
-  console.log("ERROR:", errors);
-
   const onSubmit = (values: PurchaseOrderCreateZod) => {
     console.log("FORM_VALUES:", values);
   }
@@ -64,41 +61,56 @@ export function PurchaseOrderCreateForm() {
             <FieldSet>
               <FieldGroup>
 
+                <div className="flex flex-col md:flex-row gap-2">
+                  <FormField
+                    control={form.control}
+                    name="supplier_id"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Supplier</FormLabel>
+                        <FormControl>
+                          <SelectSearch
+                            options={suppliers}
+                            value={field.value}
+                            placeholder="Select supplier"
+                            onChange={field.onChange}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="expected_date"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Expected Date</FormLabel>
+                        <FormControl>
+                          <DateYYYYMMDD onSelect={field.onChange} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
                 <FormField
                   control={form.control}
-                  name="supplier_id"
+                  name="address"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Supplier</FormLabel>
+                      <FormLabel>Address</FormLabel>
                       <FormControl>
-                        <SelectSearch
-                          options={suppliers}
-                          value={field.value}
-                          placeholder="Select supplier"
-                          onChange={field.onChange}
-                        />
+                        <Textarea {...field} placeholder="Address" />
                       </FormControl>
                     </FormItem>
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="expected_date"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Expected Date</FormLabel>
-                      <FormControl>
-                        <DateYYYYMMDD onSelect={field.onChange} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-
-                <div className={form.watch("supplier_id") !== "" ? "block":"hidden"}>
-                <FormProvider {...form}>
-                  <PurchaseOrderTableItems form={form} />
-                </FormProvider>
+                <div className={form.watch("supplier_id") !== "" ? "block" : "hidden"}>
+                  <FormProvider {...form}>
+                    <PurchaseOrderTableItems form={form} />
+                  </FormProvider>
                 </div>
 
               </FieldGroup>
